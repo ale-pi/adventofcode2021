@@ -1,3 +1,14 @@
+def count_ones(l, pos):
+    return sum([int(row[pos]) for row in l])
+
+def most_common(l, pos):
+    ones = count_ones(l, pos)
+    return int(ones >= len(l) / 2)
+
+def less_common(l, pos):
+    ones = count_ones(l, pos)
+    return int(ones < len(l) / 2)
+
 with open("input", "r") as report_file:
     report = [i.rstrip("\n") for i in report_file.readlines()]
 
@@ -5,9 +16,8 @@ with open("input", "r") as report_file:
 gamma = epsilon = ""
 
 for i in range(len(report[0])):
-    ones = sum([int(n[i]) for n in report])
-    n_common = int(ones >= len(report) / 2)
-    n_uncommon = int(ones < len(report) / 2)
+    n_common = most_common(report, i)
+    n_uncommon = less_common(report, i)
     gamma = gamma + str(n_common)
     epsilon = epsilon + str(n_uncommon)
 
@@ -19,13 +29,11 @@ report_c = report.copy()
 
 for i in range(len(report[0])):
     if len(report_o) != 1:
-        ones_o = sum([int(n[i]) for n in report_o])
-        n_o = int(ones_o >= len(report_o) / 2)
+        n_o = most_common(report_o, i)
         report_tmp = [j for j in report_o if int(j[i]) == n_o]
         report_o = report_tmp.copy()
     if len(report_c) != 1:
-        ones_c = sum([int(n[i]) for n in report_c])
-        n_c = int(ones_c < len(report_c) / 2)
+        n_c = less_common(report_c, i)
         report_tmp = [j for j in report_c if int(j[i]) == n_c]
         report_c = report_tmp.copy()
 
