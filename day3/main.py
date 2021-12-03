@@ -1,5 +1,5 @@
-report_file = open("input", "r")
-report = [i.rstrip("\n") for i in report_file.readlines()]
+with open("input", "r") as report_file:
+    report = [i.rstrip("\n") for i in report_file.readlines()]
 
 # part 1
 gamma = epsilon = ""
@@ -7,7 +7,7 @@ gamma = epsilon = ""
 for i in range(len(report[0])):
     ones = sum([int(n[i]) for n in report])
     n_common = int(ones >= len(report) / 2)
-    n_uncommon = int(ones <= len(report) / 2)
+    n_uncommon = int(ones < len(report) / 2)
     gamma = gamma + str(n_common)
     epsilon = epsilon + str(n_uncommon)
 
