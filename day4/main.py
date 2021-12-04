@@ -28,6 +28,7 @@ def score(t, n):
 
 # part 1
 boards_p1 = boards.copy()
+
 for d in draws:
     boards_p1 = list(map(mark_number, boards_p1, [d]*len(boards_p1)))
     winner = list(filter(check_win, boards_p1))
@@ -38,7 +39,7 @@ print(score(winner[0], d))
 
 # part 2
 boards_p2 = boards.copy()
-not_winner = []
+
 for d in draws:
     boards_p2 = list(map(mark_number, boards_p2, [d]*len(boards_p2)))
     not_winner = list(filter(lambda x:(not(check_win(x))), boards_p2))
