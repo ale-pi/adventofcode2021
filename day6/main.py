@@ -19,3 +19,12 @@ print(len(lf))
 # part 2
 with open("input", "r") as lf_file:
     lf = [int(i) for i in lf_file.readline().split(",")]
+
+f = [lf.count(i) for i in range(9)]
+
+for d in range(256):
+    nf = f.pop(0)
+    f[6] += nf
+    f.append(nf)
+
+print(sum(f))
