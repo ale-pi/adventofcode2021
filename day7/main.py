@@ -19,7 +19,7 @@ fuel = [0 for i in range(pos_max + 1)]
 
 for i in range(pos_max + 1):
     for c in range(pos_max + 1):
-        exp = sum([e for e in range(0, abs(c - i) + 1)])
+        exp = sum(range(0, abs(c - i) + 1))
         fuel[i] += exp * crabs[c]
 
 print(min(fuel))
