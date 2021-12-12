@@ -10,6 +10,23 @@ def check_little_caves_twice(m, p):
         return False
     return True
 
+def find_paths(starts, ends, moves, check):
+    paths = []
+    tmp_paths = starts.copy()
+
+    while len(tmp_paths) != 0:
+        n_paths = len(tmp_paths)
+        for i in range(n_paths):
+            for m in moves:
+                if m[0] == tmp_paths[i][-1] and check(m[1], tmp_paths[i]):
+                    tmp_paths.append(tmp_paths[i] + [m[1]])
+            for e in ends:
+                if e[0] == tmp_paths[i][-1]:
+                    paths.append(tmp_paths[i] + [e[1]])
+        tmp_paths = tmp_paths[n_paths:]
+
+    return paths
+
 with open("input", "r") as in_file:
     tmp = in_file.read().splitlines()
     connections = [line.split("-") for line in tmp]
@@ -24,37 +41,9 @@ moves = list(filter(lambda x:("end" not in x and "start" not in x), connections)
 moves = moves + list(map(lambda x:([x[1], x[0]]), moves))
 
 # part 1
-
-paths = []
-tmp_paths = starts.copy()
-
-while len(tmp_paths) != 0:
-    n_paths = len(tmp_paths)
-    for i in range(n_paths):
-        for m in moves:
-            if m[0] == tmp_paths[i][-1] and check_little_caves(m[1], tmp_paths[i]):
-                tmp_paths.append(tmp_paths[i] + [m[1]])
-        for e in ends:
-            if e[0] == tmp_paths[i][-1]:
-                paths.append(tmp_paths[i] + [e[1]])
-    tmp_paths = tmp_paths[n_paths:]
-
+paths = find_paths(starts, ends, moves, check_little_caves)
 print(len(paths))
 
 # part 2
-
-paths = []
-tmp_paths = starts.copy()
-
-while len(tmp_paths) != 0:
-    n_paths = len(tmp_paths)
-    for i in range(n_paths):
-        for m in moves:
-            if m[0] == tmp_paths[i][-1] and check_little_caves_twice(m[1], tmp_paths[i]):
-                tmp_paths.append(tmp_paths[i] + [m[1]])
-        for e in ends:
-            if e[0] == tmp_paths[i][-1]:
-                paths.append(tmp_paths[i] + [e[1]])
-    tmp_paths = tmp_paths[n_paths:]
-
+paths = find_paths(starts, ends, moves, check_little_caves_twice)
 print(len(paths))
